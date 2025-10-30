@@ -10,10 +10,13 @@ mongoose.connect("mongodb+srv://bereisagb_db_user:hU042DhrjYrpmV75@mongoose.ytmf
 .then(()=> console.log("connected to DB"))
 .catch((error)=> console.log(error));
 
-const { createCourses, getAllRecords, findOneCourse } = require("./coursesController");
+const { createCourses, getAllRecords, findOneCourse, updateCourseById, deleteOneCourse} = require("./coursesController");
 
 app.post("/courses", createCourses);
 app.get("/allcourses", getAllRecords);
-app.get("/course/:id", findOneCourse)
+app.get("/course/:id", findOneCourse);
+app.put("/course/:id", updateCourseById);
+app.delete("/course/:id", deleteOneCourse);
+
 //////////////
 app.listen(5050, () => console.log("Serveris veikia"));
