@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+    <form id="form">
+    <div>
+        <label for="titleInput">Course title</label>
+        <input type="text" id="titleInput" name="title"/>
+    </div>
+
+    <div>
+        <label for="teacherInput">Course teacher</label>
+        <input type="text" id="teacherInput" name="teacher"/>
+    </div>
+
+    <button id="createBtn">Create course</button>
+</form>
+
+    
+    <h1>Courses app</h1>
+
+
+    <div id="container">
+
+    <table id="myTable" border="1">
+        <thead>
+            <tr>
+                <th>Nr.</th>
+                <th>Course Title</th>
+                <th>Courses Teacher</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
+
+</div>
+
+<h2 id="message"></h2>
+
+
+
+    <script src="script.js"></script>
+</body>
+</html>

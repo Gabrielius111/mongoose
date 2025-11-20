@@ -8,6 +8,8 @@ const createCourses = async (req, res) => {
   try {
     const { title, teacher } = req.body;
 
+console.log(title, teacher)
+
     if (!title || !teacher) {
       return res.status(400).json({ error: "All fields are required" });
     }
