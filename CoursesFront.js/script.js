@@ -2,7 +2,8 @@ let form = document.getElementById("form");
 let titleInput = document.getElementById("titleInput");
 let teacherInput = document.getElementById("teacherInput");
 let createBtn = document.getElementById("createBtn");
-let container = document.getElementById("container")
+let container = document.getElementById("container");
+let updateBtn = document.getElementById("updateBtn");
 
 
 form.addEventListener("submit", async (event) => {
@@ -20,18 +21,24 @@ fetch("http://localhost:5000/courses", {
     body: JSON.stringify(courseData)
 })
 .then(resp=>resp.json())
-.then(()=>{
-    console.log(data);
+.then(() => {
+    fetchCourses();
     form.reset();
   });
 });
 
 
-//GET
-//GET and DISPLAY
-// /allcourses
+//  GET
+//  GET and DISPLAY
+//  /allcourses
 
 function fetchCourses() {
+
+// updateBtn paslepe del comand "none", o createBtn parodo button
+    createBtn.style.display = "inline-block";
+    updateBtn.style.display = "none";
+// aaaaaaaaaaaaaaa
+
     fetch("http://localhost:5000/allcourses")
     .then((resp)=>resp.json())
 .then((data)=> {
@@ -82,9 +89,9 @@ const allEditButtons = document.querySelectorAll(".edit")
 });
 
 const allDeleteButton = document.querySelectorAll(".delete")
-//    allDeleteButton.forEach((btn) => {
-//    btn.addEventListener("click", handClickDelete);
-//});
+    allDeleteButton.forEach((btn) => {
+   btn.addEventListener("click", handleClickDelete);
+});
     }  
 });
 }
@@ -94,21 +101,64 @@ const allDeleteButton = document.querySelectorAll(".delete")
 //  get(/courses/:id)
 //  /courses/:id
 
-
-
-
 function handClickEdit(event) {
    const courseID = event.target.getAttribute("data-id");
    console.log(courseID);
 
+   
 
-fetch("http://localhost:5000/courses/" + courseID)
+fetch(`http://localhost:5000/courses/${courseID}`)
  .then((resp) =>resp.json())
  .then((data) => {
+    
     console.log(data);
     titleInput.value = data.title;
     teacherInput.value = data.teacher;
+
+    updateBtn.style.display = "inline-block";
+    updateBtn.setAttribute("data-id", courseID);
+
+    createBtn.style.display = "none";
  });
+}
+
+    updateBtn.addEventListener("click", () => {
+    const courseID = updateBtn.getAttribute("data-id"); 
+
+    const updatedRecord = {
+        title: titleInput.value,
+        teacher: teacherInput.value,
+    };
+
+    fetch(`http://localhost:5000/courses/${courseID}`, {
+     method: "PUT", 
+     headers: {"Content-Type": "application/json"},
+     body: JSON.stringify(updatedRecord)
+})  
+    .then((resp) => resp.json())
+    .then(() => {
+        fetchCourses();
+        form.reset();
+    });
+});
+
+//  DELETE
+//  get(/courses/:id)
+//  /courses/:id
+
+function handleClickDelete(event) {
+    const courseID = event.target.getAttribute("data-id"); 
+
+    fetch(`http://localhost:5000/courses/${courseID}`, {
+        method: "DELETE",
+    })
+    .then((resp) => resp.json())
+    .then((data) => {
+    fetchCourses();
+    
+    
+    
+  });
 }
 
 fetchCourses();
